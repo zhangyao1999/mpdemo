@@ -1,5 +1,6 @@
 package com.zy.mpdemo;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zy.mpdemo.entity.User;
 import com.zy.mpdemo.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,32 @@ class MpdemoApplicationTests {
         user.setName("niko");
         userMapper.updateById(user);
 
+    }
+
+    /**
+     * 分页查询
+     */
+    @Test
+    public void pagination() {
+        // 1.创建 Page 对象
+        Page<User> page = new Page<>();
+
+        // 2.设置 查询的起始页，每页的数据量。
+        page.setCurrent(1);
+        page.setSize(3);
+
+        // 3. 调用 MyBatis-Plus 分页查询的方法
+        userMapper.selectPage(page, null);
+
+        // 4. 从返回的 IPage 对象中获取分页数据
+        System.out.println("当前是第 " + page.getCurrent() + " 页");
+        System.out.println("总共有 " + page.getPages() + " 页");
+        System.out.println("当前页有 " + page.getSize() + " 条数据");
+        System.out.println("总共有 " + page.getTotal() + " 条数据");
+        System.out.println("是否还有下一页 " + page.hasNext());
+        System.out.println("是否还有上一页 " + page.hasPrevious());
+        List<User> users = page.getRecords();
+        users.forEach(System.out :: println);
     }
 
 }
