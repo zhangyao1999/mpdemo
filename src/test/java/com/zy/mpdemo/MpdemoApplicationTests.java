@@ -1,5 +1,6 @@
 package com.zy.mpdemo;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zy.mpdemo.entity.User;
 import com.zy.mpdemo.mapper.UserMapper;
@@ -72,6 +73,22 @@ class MpdemoApplicationTests {
         System.out.println("是否还有上一页 " + page.hasPrevious());
         List<User> users = page.getRecords();
         users.forEach(System.out :: println);
+    }
+
+    /**
+     * 逻辑删除
+     */
+    @Test
+    public void logicDeleteById() {
+        userMapper.deleteById(2L);
+    }
+
+    @Test
+    public void complexQuery(){
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.ge("age", 21);
+        List<User> users = userMapper.selectList(wrapper);
+        System.out.println(users);
     }
 
 }

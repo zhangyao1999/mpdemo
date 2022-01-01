@@ -26,8 +26,10 @@ public class User {
     private Date updateTime;
 
     // 添加默认值
-    @TableField (fill = FieldFill.INSERT)
+    @TableField(fill = FieldFill.INSERT)
     @Version
     private Integer version;
 
+    @TableLogic
+    private Integer deleted;
 }
